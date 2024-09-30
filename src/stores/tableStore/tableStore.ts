@@ -32,8 +32,7 @@ class TableStore {
       getTableDataFromLocalStorage: action,
       saveTableDataToLocalStorage: action
     });
-    // TODO: test test
-    this.getTableDataFromLocalStorage()
+        this.getTableDataFromLocalStorage()
   }
 
   getTableDataFromLocalStorage() {
@@ -47,7 +46,6 @@ class TableStore {
     localStorage.setItem("tableData", JSON.stringify(this.tableData));
   }
 
-  // TODO: ?
   async performAction<T>(
     action: () => Promise<T>,
     onSuccess?: (data: T) => void
@@ -63,6 +61,7 @@ class TableStore {
       }
     } catch (error) {
       this.errorMessage = "Произошла ошибка(";
+      console.error(error)
     } finally {
       this.isDataLoading = false;
     }
