@@ -1,50 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { DataGrid, GridColDef, GridRowId, GridToolbar } from "@mui/x-data-grid";
 import { observer } from "mobx-react-lite";
-import tableStore from "./stores/tableStore";
-import { Button, TextField, Box, CircularProgress } from "@mui/material";
-import { v4 as uuidv4 } from "uuid";
-import { TableRecord } from "../../stores/tableStore/tableStore";
+import { DataGrid, GridColDef, GridCellParams} from "@mui/x-data-grid";
+import { FC, useEffect } from "react";
+import tableStore from "../../stores/tableStore";
+import dayjs from 'dayjs'
 
-const Table = () => {
-const [TableRecord, setTableRecord] = useState({
-    companySigDate: "",
-    companySignatureName: "",
-    documentName: "",
-    documentStatus: "",
-    documentType: "",
-    employeeNumber: "",
-    employeeSigDate: "",
-    employeeSignatureName: "",
-});
+const columns: GridColDef[] = [
+  {
+    field: "companySigDate",
+    headerName: "Company Sig Date",
+    width: 180,
+    valueFormatter: (params: GridCellParams) =>
+        dayjs(params.value).format('DD.MM.YYYY HH:mm'),
+  },
+  {
+    field: "companySignatureName",
+    headerName: "Company Signature Name",
+    width: 220,
+  },
+  { field: "documentName", headerName: "Document Name", width: 180 },
+  { field: "documentStatus", headerName: "Document Status", width: 180 },
+  { field: "documentType", headerName: "Document Type", width: 180 },
+  { field: "employeeNumber", headerName: "Employee Number", width: 180 },
+  {
+    field: "employeeSigDate",
+    headerName: "Employee Sig Date",
+    width: 180,
+    valueFormatter: (params: GridCellParams) =>
+        dayjs(params.value).format('DD.MM.YYYY HH:mm'),
+  },
+  {
+    field: "employeeSignatureName",
+    headerName: "Employee Signature Name",
+    width: 220,
+  },
+];
 
-const [isChangeModalOpen, setisChangeMadalOpen] = useState(false);
-const [changeRecordinMadal, setChangeInMadal] = useState <TableRecord | null>(null);
+const Table: FC = () => {
+  useEffect(() => {
+    tableStore.getDataForTable();
+  }, [tableStore.getDataForTable]);
 
-useEffect(() => {
-    const loadData = async () => {
-    await tableStore.getDataForTable();
-    //TODO: если при первой загрузке пришли какие-то данные с сервера - отобразить их в первой строке
-    if (tableStore.tableData.length > 0) {
-        const firstRow = tableStore.tableData[0];
-        setTableRecord({
-        companySigDate: firstRow.companySigDate || "",
-        companySignatureName: firstRow.companySignatureName || "",
-        documentName: firstRow.documentName || "",
-        documentStatus: firstRow.documentStatus || "",
-        documentType: firstRow.documentType || "",
-        employeeNumber: firstRow.employeeNumber || "",
-        employeeSigDate: firstRow.employeeSigDate || "",
-        employeeSignatureName: firstRow.employeeSignatureName || "",
-        });
-    }
-    };
-    loadData();
-}, []);
-
-
-
-return <div></div>;
+  return (
+    <div style={{ height: 400, width: "100%" }}>
+      <DataGrid
+        rows={tableStore.tableData}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        loading={tableStore.isDataLoading}
+        getRowId={(row) => row.id}
+        disableSelectionOnClick
+        showColumnVerticalBorder
+      />
+    </div>
+  );
 };
 
 export default observer(Table);
+

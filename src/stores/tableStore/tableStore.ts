@@ -9,7 +9,7 @@ import { apiService } from "../../api/apiService";
   documentStatus: string;
   documentType: string;
   employeeNumber: string;
-  employeeSigDate: string;
+  employeeSigDate: string;or
   employeeSignatureName: string;
 };
 type TableData = TableRecord[];
