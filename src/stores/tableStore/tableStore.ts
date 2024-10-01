@@ -1,7 +1,7 @@
 import { makeObservable, observable, action } from "mobx";
 import { apiService } from "../../api/apiService";
 
- export type TableRecord = {
+  export type TableRecord = {
   id?: string
   companySigDate: string ;
   companySignatureName: string;

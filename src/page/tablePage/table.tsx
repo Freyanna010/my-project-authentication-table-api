@@ -1,13 +1,25 @@
+import React, { useEffect, useState } from "react";
+import { DataGrid, GridColDef, GridRowId, GridToolbar } from "@mui/x-data-grid";
 import { observer } from "mobx-react-lite";
-import { FC, useEffect, useState} from "react";
-import tableStore from "../../stores/tableStore/tableStore";
+import tableStore from "./stores/tableStore";
+import { Button, TextField, Box, CircularProgress } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
+
+const Table = () => {
+const [TableRow, setTableRow] = useState({
+    companySigDate: "",
+    companySignatureName: "",
+    documentName: "",
+    documentStatus: "",
+    documentType: "",
+    employeeNumber: "",
+    employeeSigDate: "",
+    employeeSignatureName: "",
+});
 
 
 
-
-const Table: FC = () => {
- 
- 
+return <div></div>;
 };
 
-export default  observer (Table);
+export default observer(Table);
