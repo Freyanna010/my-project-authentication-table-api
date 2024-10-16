@@ -1,15 +1,15 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, runInAction } from "mobx";
 import { apiService } from "../../api/apiService";
 
-  export type TableRecord = {
-  id?: string
-  companySigDate: string ;
+export type TableRecord = {
+  id?: string;
+  companySigDate: string;
   companySignatureName: string;
   documentName: string;
   documentStatus: string;
   documentType: string;
   employeeNumber: string;
-  employeeSigDate: string;or
+  employeeSigDate: string;
   employeeSignatureName: string;
 };
 type TableData = TableRecord[];
@@ -30,9 +30,9 @@ class TableStore {
       deleteTableRecord: action,
       performAction: action,
       getTableDataFromLocalStorage: action,
-      saveTableDataToLocalStorage: action
+      saveTableDataToLocalStorage: action,
     });
-        this.getTableDataFromLocalStorage()
+    this.getTableDataFromLocalStorage();
   }
 
   getTableDataFromLocalStorage() {
@@ -50,20 +50,28 @@ class TableStore {
     action: () => Promise<T>,
     onSuccess?: (data: T) => void
   ) {
-    this.isDataLoading = true;
-    this.errorMessage = null;
+    runInAction(() => {
+      this.isDataLoading = true;
+      this.errorMessage = null;
+    });
 
     try {
       const result = await action();
-      if (onSuccess) {
-        onSuccess(result);
-          this.saveTableDataToLocalStorage()
-      }
+      runInAction(() => {
+        if (onSuccess) {
+          onSuccess(result);
+          this.saveTableDataToLocalStorage();
+        }
+      });
     } catch (error) {
-      this.errorMessage = "Произошла ошибка(";
-      console.error(error)
+      runInAction(() => {
+        this.errorMessage = "Произошла ошибка(";
+      });
+      console.error(error);
     } finally {
-      this.isDataLoading = false;
+      runInAction(() => {
+        this.isDataLoading = false;
+      });
     }
   }
 
@@ -74,8 +82,9 @@ class TableStore {
           "/ru/data/v3/testmethods/docs/userdocs/get"
         ),
       (response) => {
-        this.tableData = response.data;
-        this.saveTableDataToLocalStorage()
+        runInAction(() => {
+          this.tableData = response.data;
+        });
       }
     );
   }
@@ -112,4 +121,5 @@ class TableStore {
     );
   }
 }
+
 export default new TableStore();

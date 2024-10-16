@@ -24,10 +24,13 @@ const Login: FC = () => {
   const onSubmit = async (data: Input) => {
     try {
       await loginStore.getResponseFromServer(data.name, data.password);
-      navigate("/");
+      if (loginStore.token) {
+        navigate("/");
+      } else {
+        navigate("/error");
+      }
     } catch (error) {
       console.error(error);
-      navigate("/error");
     } finally {
       setValue("name", "");
       setValue("password", "");

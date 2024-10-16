@@ -1,16 +1,18 @@
 import { observer } from "mobx-react-lite";
-import { DataGrid, GridColDef, GridCellParams} from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridCellParams } from "@mui/x-data-grid";
 import { FC, useEffect } from "react";
 import tableStore from "../../stores/tableStore";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 
 const columns: GridColDef[] = [
   {
     field: "companySigDate",
     headerName: "Company Sig Date",
-    width: 180,
-    valueFormatter: (params: GridCellParams) =>
-        dayjs(params.value).format('DD.MM.YYYY HH:mm'),
+    width: 220,
+    valueFormatter: (params: GridCellParams) => {
+      const dateValue = params.value as string | undefined;
+      return dateValue ? dayjs(dateValue).format("DD.MM.YYYY HH:mm") : "";
+    },
   },
   {
     field: "companySignatureName",
@@ -24,9 +26,11 @@ const columns: GridColDef[] = [
   {
     field: "employeeSigDate",
     headerName: "Employee Sig Date",
-    width: 180,
-    valueFormatter: (params: GridCellParams) =>
-        dayjs(params.value).format('DD.MM.YYYY HH:mm'),
+    width: 220,
+    valueFormatter: (params: GridCellParams) => {
+      const dateValue = params.value as string | undefined;
+      return dateValue ? dayjs(dateValue).format("DD.MM.YYYY HH:mm") : "";
+    },
   },
   {
     field: "employeeSignatureName",
@@ -39,22 +43,26 @@ const Table: FC = () => {
   useEffect(() => {
     tableStore.getDataForTable();
   }, [tableStore.getDataForTable]);
+console.log(tableStore.tableData);
 
   return (
     <div style={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={tableStore.tableData}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        loading={tableStore.isDataLoading}
-        getRowId={(row) => row.id}
-        disableSelectionOnClick
-        showColumnVerticalBorder
-      />
+ <DataGrid
+  rows={tableStore.tableData}
+  columns={columns}
+  initialState={{
+    pagination: {
+      paginationModel: { pageSize: 5 },
+    },
+  }}
+  pageSizeOptions={[5]}
+  loading={tableStore.isDataLoading}
+  getRowId={(row) => row.id}
+  disableRowSelectionOnClick
+  showColumnVerticalBorder
+/>
     </div>
   );
 };
 
 export default observer(Table);
-
