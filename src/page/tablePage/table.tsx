@@ -3,6 +3,8 @@ import { DataGrid, GridColDef, GridCellParams } from "@mui/x-data-grid";
 import { FC, useEffect } from "react";
 import tableStore from "../../stores/tableStore";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import loginStore from "../../stores/loginStore";
 
 const columns: GridColDef[] = [
   {
@@ -40,27 +42,37 @@ const columns: GridColDef[] = [
 ];
 
 const Table: FC = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
-    tableStore.getDataForTable();
-  }, [tableStore.getDataForTable]);
-console.log(tableStore.tableData);
+    const token = loginStore.token || localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    } else {
+      tableStore.getDataForTable();
+    }
+  }, [navigate]);
+
+  // useEffect(() => {
+  //   tableStore.getDataForTable();
+  // }, [tableStore.getDataForTable]);
 
   return (
     <div style={{ height: 400, width: "100%" }}>
- <DataGrid
-  rows={tableStore.tableData}
-  columns={columns}
-  initialState={{
-    pagination: {
-      paginationModel: { pageSize: 5 },
-    },
-  }}
-  pageSizeOptions={[5]}
-  loading={tableStore.isDataLoading}
-  getRowId={(row) => row.id}
-  disableRowSelectionOnClick
-  showColumnVerticalBorder
-/>
+      <DataGrid
+        rows={tableStore.tableData}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 5 },
+          },
+        }}
+        pageSizeOptions={[5]}
+        loading={tableStore.isDataLoading}
+        getRowId={(row) => row.id}
+        disableRowSelectionOnClick
+        showColumnVerticalBorder
+      />
     </div>
   );
 };

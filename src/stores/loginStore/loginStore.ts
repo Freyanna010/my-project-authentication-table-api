@@ -34,12 +34,12 @@ class LoginStore {
         username,
         password,
       });
-      this.token = response.data.token;
+      this.token = response.data?.data?.token || null;
       if (this.token) {
         localStorage.setItem("token", this.token);
+        this.isUserAuthenticated = true;
+        this.errorMessage = null;
       }
-      this.isUserAuthenticated = true;
-      this.errorMessage = null;
     } catch (error) {
       this.errorMessage =
         "Ошибка аутентификации. Введите верные имя пользователя и пароль.";

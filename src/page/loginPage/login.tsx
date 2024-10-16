@@ -2,7 +2,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { FC } from "react";
 import { useForm, useFormState } from "react-hook-form";
 import { themeForm } from "../../theme/theme";
-import classes from "./login.module.css";
+import classes from "./Login.module.css";
 import InputName from "./InputName";
 import InputPassword from "./InputPassword";
 import loginStore from "../../stores/loginStore/loginStore";
@@ -26,11 +26,15 @@ const Login: FC = () => {
       await loginStore.getResponseFromServer(data.name, data.password);
       if (loginStore.token) {
         navigate("/");
+        console.log(loginStore.token);
+        
       } else {
         navigate("/error");
+        console.log(loginStore.token);
       }
     } catch (error) {
       console.error(error);
+      navigate("/error");
     } finally {
       setValue("name", "");
       setValue("password", "");
