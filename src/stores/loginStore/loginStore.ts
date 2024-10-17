@@ -2,18 +2,21 @@ import axios from "axios";
 import { makeObservable, observable, action } from "mobx";
 class LoginStore {
   token: string | null = null;
-  isUserAuthenticated: boolean = false;
-  loadingPage: boolean = false;
+  isUserAuthenticated = false;
+  isAuthInitialized = false;
+  loadingPage = false;
   errorMessage: string | null = null;
 
   constructor() {
     makeObservable(this, {
       token: observable,
-      isUserAuthenticated: observable,
+      isUserAuthenticated: observable, 
+      isAuthInitialized: observable,   
       loadingPage: observable,
       errorMessage: observable,
       getTokenFromLocalStorage: action,
       getResponseFromServer: action,
+      
     });
   }
 
@@ -23,6 +26,7 @@ class LoginStore {
       this.token = getToken;
       this.isUserAuthenticated = true;
     }
+    this.isAuthInitialized = true;
   }
 
   async getResponseFromServer(username: string, password: string) {
