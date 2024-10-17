@@ -8,32 +8,29 @@ import { observer } from "mobx-react-lite";
 import Login from "./page/LoginPage";
 
 const App: FC = () => {
-  const navigate = useNavigate();
   useEffect(() => {
-loginStore.getTokenFromLocalStorage()
+    loginStore.getTokenFromLocalStorage();
   }, []);
 
   return (
     <div>
-    {loginStore.loadingPage ? (
-      <div>
-        {/* TODO:сделать красивую штучку */}
-        <p>идет загрузка</p>
-      </div>
-    ) : !loginStore.isAuthInitialized ? (
-      <div>Проверка аутентификации...</div>
-    ) : (
-      <Routes>
-        <Route
-          path="/"
-          element={loginStore.isUserAuthenticated ? <Table /> : <Login />}
-        />
-        <Route path="/login" element={<Login />} />
-        <Route path="/error" element={<Error />} />
-        <Route path="/table" element={<Table />} />
-      </Routes>
-    )}
-  </div>
+      {loginStore.loadingPage ? (
+        <div>
+          {/* TODO:сделать красивую штучку */}
+          <p>идет загрузка</p>
+        </div>
+      ) : (
+        <Routes>
+          <Route
+            path="/"
+            element={loginStore.isUserAuthenticated ? <Table /> : <Login />}
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/error" element={<Error />} />
+          <Route path="/table" element={<Table />} />
+        </Routes>
+      )}
+    </div>
   );
 };
 export default observer(App);

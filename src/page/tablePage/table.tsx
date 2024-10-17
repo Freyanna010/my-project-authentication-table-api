@@ -53,10 +53,6 @@ const Table: FC = () => {
     }
   }, [navigate]);
 
-  // useEffect(() => {
-  //   tableStore.getDataForTable();
-  // }, [tableStore.getDataForTable]);
-
   return (
     <div style={{ height: 400, width: "100%" }}>
       <DataGrid
