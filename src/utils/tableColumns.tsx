@@ -46,14 +46,15 @@ export const getColumns = (deleteRecord: (id: string) => void): GridColDef[] => 
       headerName: "Actions",
       width: 100,
       renderCell: (params: GridCellParams) => (
-        <IconButton color="error" aria-label="delete"
-        onClick={() => deleteRecord(params.id as string)}
+        <IconButton
+          color="error"
+          aria-label="delete"
+          onClick={() => deleteRecord(params.id as string)}
+        >
           <DeleteIcon />
         </IconButton>
       ),
       sortable: false,
       filterable: false,
     },
-
-    
   ];
