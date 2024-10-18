@@ -19,6 +19,8 @@ const App: FC = () => {
           {/* TODO:сделать красивую штучку */}
           <p>идет загрузка</p>
         </div>
+      ) : !loginStore.isAuthInitialized ? (
+        <div>Проверка аутентификации.Подождите пожалуйста.</div> 
       ) : (
         <Routes>
           <Route

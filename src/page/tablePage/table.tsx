@@ -5,13 +5,17 @@ import tableStore from "../../stores/tableStore";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import loginStore from "../../stores/loginStore";
+import IconButton from "@mui/material/IconButton/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const columns: GridColDef[] = [
+  // TODO:вынести?
   {
     field: "companySigDate",
     headerName: "Company Sig Date",
     width: 220,
     valueFormatter: (params: GridCellParams) => {
+      //TODO: не работает
       const dateValue = params.value as string | undefined;
       return dateValue ? dayjs(dateValue).format("DD.MM.YYYY HH:mm") : "";
     },
@@ -39,6 +43,19 @@ const columns: GridColDef[] = [
     headerName: "Employee Signature Name",
     width: 220,
   },
+  {
+    field: "actions",
+    headerName: "Actions",
+    width: 100,
+    renderCell: (params: GridCellParams) => (
+      <IconButton color="error" aria-label="delete"
+      onClick={() => tableStore.deleteTableRecord(params.id as string)} >
+        <DeleteIcon />
+      </IconButton>
+    ),
+    sortable: false,
+    filterable: false,
+  },
 ];
 
 const Table: FC = () => {
@@ -65,7 +82,7 @@ const Table: FC = () => {
         }}
         pageSizeOptions={[5]}
         loading={tableStore.isDataLoading}
-        getRowId={(row) => row.id}
+        getRowId={(row) => row.id as string}
         disableRowSelectionOnClick
         showColumnVerticalBorder
       />
