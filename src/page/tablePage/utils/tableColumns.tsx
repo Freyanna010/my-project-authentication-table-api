@@ -5,11 +5,11 @@ import ActionCell from "../ActionCell";
 
 // TODO:перенести файл?
 // TODO:перенести фкнкци?
-
 const createTextColumn = (field: string, headerName: string, width: number = 180): GridColDef => ({
   field,
   headerName,
   width,
+  editable: true
 });
 const createActionsColumn = (deleteRecord: (id: string) => void): GridColDef => ({
   field: "actions",
@@ -21,10 +21,12 @@ const createActionsColumn = (deleteRecord: (id: string) => void): GridColDef => 
   sortable: false,
   filterable: false,
 });
+// TODO:не отображается
 const createDateColumn = (field: string, headerName: string): GridColDef => ({
   field,
   headerName,
   width: 220,
+  editable: true,
   valueFormatter: (params: GridCellParams) => {
     const dateValue = params.value as string | undefined;
     return dateValue ? dayjs(dateValue).format("DD.MM.YYYY HH:mm") : "";

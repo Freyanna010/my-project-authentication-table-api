@@ -17,10 +17,10 @@ const App: FC = () => {
       {loginStore.loadingPage ? (
         <div>
           {/* TODO:сделать красивую штучку */}
-          <p>идет загрузка</p>
+          <p>идет загрузка приложения</p>
         </div>
-      ) : !loginStore.isAuthInitialized ? (
-        <div>Проверка аутентификации.Подождите пожалуйста.</div> 
+      // ) : !loginStore.isAuthInitialized ? (
+      //   <div>Проверка аутентификации.Подождите пожалуйста.</div> 
       ) : (
         <Routes>
           <Route
