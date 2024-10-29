@@ -73,7 +73,6 @@ class TableStore {
       runInAction(() => {
         this.isDataLoading = false;
         console.log(this.tableData);
-        
       });
     }
   }

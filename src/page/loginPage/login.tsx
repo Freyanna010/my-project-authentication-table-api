@@ -42,7 +42,7 @@ const Login: FC = () => {
   };
 
   return (
-    // TODO: добавить  какую-то штучку  для загрузки + div  c сообщением об ошибки
+  
     <ThemeProvider theme={themeForm}>
       <div className={classes.form}>
         <form onSubmit={handleSubmit(onSubmit)}>

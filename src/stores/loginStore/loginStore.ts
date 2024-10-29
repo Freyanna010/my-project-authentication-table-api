@@ -26,7 +26,8 @@ class LoginStore {
       this.token = getToken;
       this.isUserAuthenticated = true;
     }
-    this.isAuthInitialized = true;
+    // TODO:Нужно?
+    // this.isAuthInitialized = true;
   }
 
   async getResponseFromServer(username: string, password: string) {
