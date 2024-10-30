@@ -20,6 +20,20 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "src/shared/styles/theme",
+    "src/shared/hooks",
+    "src/shared/hooks",
+    "src/modules/Auth/stores/loginStore",
+    "src/modules/Auth/components/AuthForm/Login.tsx",
+    "src/modules/Auth/components/AuthForm/index.ts",
+    "src/modules/Auth/utils/validation.ts",
+    "src/modules/Table/components/Table/Table.tsx",
+    "src/modules/Table/components/Table/index.ts",
+    "src/modules/Table/components/ActionCell",
+    "src/modules/Table/utils/tableColumns.tsx",
+    "src/modules/Table/stores/tableStore"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

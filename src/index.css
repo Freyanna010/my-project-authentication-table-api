@@ -13,8 +13,7 @@ a,
 img,
 ol,
 ul,
-li
- {
+li {
   margin: 0;
   padding: 0;
   border: 0;
@@ -26,10 +25,10 @@ li
 }
 ol,
 ul {
-  list-style: none;}
+  list-style: none;
+}
 
-
-body {  
+body {
   background: url(./../public/bg_tea2.jpg);
   background-repeat: repeat;
   display: flex;
@@ -42,7 +41,5 @@ button {
   border: none;
   font: inherit;
   color: inherit;
-  background-color: transparent; 
+  background-color: transparent;
 }
-
-
