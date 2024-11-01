@@ -2,34 +2,28 @@ import axios from "axios";
 import { makeObservable, observable, action } from "mobx";
 class LoginStore {
   token: string | null = null;
-  isUserAuthenticated = false;
-  isAuthInitialized = false;
+  isUserAuth = false;
   loadingPage = false;
   errorMessage: string | null = null;
 
   constructor() {
     makeObservable(this, {
       token: observable,
-      isUserAuthenticated: observable,
-      isAuthInitialized: observable,
+      isUserAuth: observable,
       loadingPage: observable,
       errorMessage: observable,
-      getTokenFromLocalStorage: action,
-      getResponseFromServer: action,
+      fetchAuthToken: action,
+      // getTokenFromLocalStorage: action,
     });
   }
 
   getTokenFromLocalStorage = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      this.token = token;
-      this.isUserAuthenticated = true;
-    }
-    // TODO:Нужно?
-    // this.isAuthInitialized = true;
+    this.token = localStorage.getItem("token");
+    this.isUserAuth = !!this.token;
   };
 
-  getResponseFromServer = async (username: string, password: string) => {
+  // TODO: 🦄изменила название (сделала стрелочной)
+  fetchAuthToken = async (username: string, password: string) => {
     this.loadingPage = true;
     const url =
       "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/login";
@@ -41,15 +35,28 @@ class LoginStore {
       this.token = response.data?.data?.token || null;
       if (this.token) {
         localStorage.setItem("token", this.token);
-        this.isUserAuthenticated = true;
+        this.isUserAuth = true;
         this.errorMessage = null;
       }
-    } catch {
+      // TODO: 🦄Эта проверка обязательна? throw new Error('Ошибка аутентификации'); - можно перенести в axiosInstanse?
+      if (response.data.error_code === 2004) {
+        throw new Error("Ошибка аутентификации");
+      }
+    } catch (error) {
       this.errorMessage =
         "Ошибка аутентификации. Введите верные имя пользователя и пароль.";
+      throw error;
     } finally {
       this.loadingPage = false;
     }
   };
+
+  // TODO: 🦄добавила для работы загрузки/не загрузки  таблицы уже внутри Table.txt
+  logout = () => {
+    this.isUserAuth = false;
+    this.token = null;
+    localStorage.removeItem("token");
+  };
 }
+
 export default new LoginStore();

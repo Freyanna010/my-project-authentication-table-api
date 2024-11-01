@@ -45,8 +45,9 @@ class TableStore {
   saveTableDataToLocalStorage() {
     localStorage.setItem("tableData", JSON.stringify(this.tableData));
   }
-  //TODO: править передачу функций
-  // TODO:пернделать на стрелочные
+
+  //TODO: править передачу функций в performAction
+
   async performAction<T>(
     action: () => Promise<T>,
     onSuccess?: (data: T) => void,
@@ -77,7 +78,7 @@ class TableStore {
     }
   }
 
-  async getDataForTable() {
+  getDataForTable = async () => {
     await this.performAction(
       () =>
         apiService.get<{ data: TableData }>(
@@ -89,9 +90,9 @@ class TableStore {
         });
       },
     );
-  }
+  };
 
-  async addNewTableRecord(newTableRecord: TableRecord) {
+  addNewTableRecord = async (newTableRecord: TableRecord) => {
     await this.performAction(
       () =>
         apiService.post(
@@ -100,9 +101,9 @@ class TableStore {
         ),
       () => this.getDataForTable(),
     );
-  }
+  };
 
-  async changeTableRecord(updatedDocument: TableRecord) {
+  changeTableRecord = async (updatedDocument: TableRecord) => {
     await this.performAction(
       () =>
         apiService.put(
@@ -111,7 +112,7 @@ class TableStore {
         ),
       () => this.getDataForTable(),
     );
-  }
+  };
 
   deleteTableRecord = async (tableRecordId: string) => {
     await this.performAction(

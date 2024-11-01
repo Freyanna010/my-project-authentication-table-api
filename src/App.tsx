@@ -1,4 +1,4 @@
-import  { FC, useEffect } from "react";
+import { FC } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
@@ -7,32 +7,28 @@ import { loginStore } from "./modules/Auth";
 import TablePage from "./pages/TablePage";
 import AuthPage from "./pages/AuthPage";
 import ErrorPage from "./pages/ErrorPage";
+import { useCheckToken } from "./modules/Auth/hooks/useCheckToken";
+import { useNavigateOnAuth } from "./shared/hooks/useNavigate";
 
 const App: FC = () => {
-  useEffect(() => {
-    loginStore.getTokenFromLocalStorage();
-  }, []);
+  // TODO: 🦄переделала  логику, вынесла хуки. Правильно расположила их по папкам.
+  useCheckToken();
+  useNavigateOnAuth("/table", "/error");
 
   return (
     <div>
       {loginStore.loadingPage ? (
         <div>
-          {/* TODO:сделать красивую штучку */}
           <p>идет загрузка приложения</p>
         </div>
       ) : (
-        // TODO:Нужно?
-        // ) : !loginStore.isAuthInitialized ? (
-        //   <div>Проверка аутентификации.Подождите пожалуйста.</div>
         <Routes>
           <Route
+            // TODO: 🦄здесь нужно указывать маршрут?
             path="/"
-            element={
-              loginStore.isUserAuthenticated ? <TablePage /> : <AuthPage />
-            }
+            element={loginStore.isUserAuth ? <TablePage /> : <AuthPage />}
           />
           <Route path="/login" element={<AuthPage />} />
-          {/* TODO: перделать в div */}
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/table" element={<TablePage />} />
         </Routes>

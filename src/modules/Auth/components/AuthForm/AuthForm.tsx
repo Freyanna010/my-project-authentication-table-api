@@ -10,7 +10,7 @@ import InputName from "../InputName";
 import InputPassword from "../InputPassword";
 
 //TODO:вынести
- export type Input = {
+export type Input = {
   name: string;
   password: string;
 };

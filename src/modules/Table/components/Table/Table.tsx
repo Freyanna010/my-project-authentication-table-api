@@ -7,18 +7,19 @@ import { useNavigate } from "react-router-dom";
 import loginStore from "../../../Auth/stores/loginStore";
 
 import { getColumns } from "../../utils/tableColumns";
+import { useNavigateOnAuth } from "../../../../shared/hooks/useNavigate";
 
 const Table: FC = () => {
-  const navigate = useNavigate();
+  useNavigateOnAuth("/table", "/login");
 
-  useEffect(() => {
-    const token = loginStore.token || localStorage.getItem("token");
-    if (!token) {
-      navigate("/login");
-    } else {
-      tableStore.getDataForTable();
-    }
-  }, [navigate]);
+  // //TODO:🦄изменила логику. или это лишняя проверка? нужно ли вынести в кастомный хук?
+  // useEffect(() => {
+  //   if (!loginStore.isUserAuth) {
+  //     navigate("/login");
+  //   } else {
+  //     tableStore.getDataForTable();
+  //   }
+  // }, [navigate]);
 
   return (
     <div style={{ height: 400, width: "100%" }}>
