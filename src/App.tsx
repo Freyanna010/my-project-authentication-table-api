@@ -1,7 +1,6 @@
 import { FC } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-
 import { observer } from "mobx-react-lite";
 import { loginStore } from "./modules/Auth";
 import TablePage from "./pages/TablePage";
@@ -11,7 +10,7 @@ import { useCheckToken } from "./modules/Auth/hooks/useCheckToken";
 import { useNavigateOnAuth } from "./shared/hooks/useNavigate";
 
 const App: FC = () => {
-  // TODO: 🦄переделала  логику, вынесла хуки. Правильно расположила их по папкам.
+  // TODO: 🦄переделала  логику, вынесла хуки. Правильно расположила их по папкам?
   useCheckToken();
   useNavigateOnAuth("/table", "/error");
 

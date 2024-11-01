@@ -1,3 +1,4 @@
+// TODO:🦄правильно расположен файл? хук использую в нескольких местах
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginStore } from "../../modules/Auth";
