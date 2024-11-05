@@ -1,6 +1,6 @@
 import axios from "axios";
 import { makeObservable, observable, action } from "mobx";
-class LoginStore {
+class LoginStore {   
   token: string | null = null;
   isUserAuth = false;
   loadingPage = false;
@@ -37,6 +37,7 @@ class LoginStore {
         localStorage.setItem("token", this.token);
         this.isUserAuth = true;
         this.errorMessage = null;
+        window.location.href = "/table"
       }
       // TODO: 🦄Эта проверка обязательна? throw new Error('Ошибка аутентификации'); - можно перенести в axiosInstanse?
       if (response.data.error_code === 2004) {
@@ -56,6 +57,7 @@ class LoginStore {
     this.isUserAuth = false;
     this.token = null;
     localStorage.removeItem("token");
+    window.location.href = "/login"
   };
 }
 

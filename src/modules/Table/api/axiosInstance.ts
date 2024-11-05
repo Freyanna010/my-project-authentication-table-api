@@ -30,7 +30,7 @@ const rejectedRequestHandler = (error: AxiosError) => error;
 const fulfilledResponseHandler = (response: AxiosResponse) => {
   if (response.data.data.error_code === 2004) {
     loginStore.logout();
-  }
+  } 
 
   return response;
 };

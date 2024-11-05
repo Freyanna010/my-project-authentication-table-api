@@ -12,7 +12,7 @@ import { useNavigateOnAuth } from "./shared/hooks/useNavigate";
 const App: FC = () => {
   // TODO: 🦄переделала  логику, вынесла хуки. Правильно расположила их по папкам?
   useCheckToken();
-  useNavigateOnAuth("/table", "/error");
+  // useNavigateOnAuth("/table", "/error");
 
   return (
     <div>
@@ -24,8 +24,8 @@ const App: FC = () => {
         <Routes>
           <Route
             // TODO: 🦄здесь нужно указывать маршрут?
-            path="/"
-            element={loginStore.isUserAuth ? <TablePage /> : <AuthPage />}
+            // path="/"
+            // element={loginStore.isUserAuth ? <TablePage /> : <AuthPage />}
           />
           <Route path="/login" element={<AuthPage />} />
           <Route path="/error" element={<ErrorPage />} />
@@ -35,4 +35,30 @@ const App: FC = () => {
     </div>
   );
 };
+// TODO:🦄без UseEffect
+// const routeConfig = {
+//   defaultRoute: () => (loginStore.isUserAuth ? "/table" : "/login"),
+// };
+// const App: FC = () => {
+//   return (
+//     <div>
+//       {loginStore.loadingPage ? (
+//         <div>
+//           <p>идет загрузка приложения</p>
+//         </div>
+//       ) : (
+//         <Routes>
+//           <Route path="/login" element={<AuthPage />} />
+//           <Route path="/error" element={<ErrorPage />} />
+//           <Route
+//             path="/"
+//             element={<Navigate to={routeConfig.defaultRoute()} />}
+//           />
+//           <Route path="/table" element={<TablePage />} />
+//         </Routes>
+//       )}
+//     </div>
+//   );
+// };
+
 export default observer(App);

@@ -10,16 +10,7 @@ import { getColumns } from "../../utils/tableColumns";
 import { useNavigateOnAuth } from "../../../../shared/hooks/useNavigate";
 
 const Table: FC = () => {
-  useNavigateOnAuth("/table", "/login");
-
-  // //TODO:🦄изменила логику. или это лишняя проверка? нужно ли вынести в кастомный хук?
-  // useEffect(() => {
-  //   if (!loginStore.isUserAuth) {
-  //     navigate("/login");
-  //   } else {
-  //     tableStore.getDataForTable();
-  //   }
-  // }, [navigate]);
+  // useNavigateOnAuth("/table", "/login");
 
   return (
     <div style={{ height: 400, width: "100%" }}>
